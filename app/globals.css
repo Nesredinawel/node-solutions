@@ -293,4 +293,32 @@ button {
   .dark .shadow-glow {
     box-shadow: 0 0 35px rgba(156, 194, 221, 0.12);
   }
+    .testimonial-marquee-wrapper:hover .testimonial-marquee {
+    animation-play-state: paused;
+  }
+
+  .testimonial-marquee {
+    animation: testimonial-scroll 32s linear infinite;
+    will-change: transform;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonial-marquee {
+      animation-duration: 28s;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .testimonial-marquee {
+      animation-duration: 24s;
+    }
+  }
+}
+@keyframes testimonial-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 14px));
+  }
 }
