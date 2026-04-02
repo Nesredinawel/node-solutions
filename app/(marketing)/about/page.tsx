@@ -1,7 +1,17 @@
+import {
+  AboutPageHero,
+  AboutIntroSection,
+  StorySection,
+  AboutPageCta,
+} from "@/features/about";
+
 export default function AboutPage() {
   return (
-    <main className="container-main section-space">
-      <h1 className="text-4xl font-bold text-white">About</h1>
+    <main className="bg-background">
+      <AboutPageHero />
+      <AboutIntroSection />
+      <StorySection />
+      <AboutPageCta />
     </main>
   );
 }
