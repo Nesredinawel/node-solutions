@@ -14,7 +14,7 @@ export default function ServicesPage() {
   );
 
   return (
-    <main className="bg-background">
+    <main className="">
       <ServicesPageHero />
 
       <div className="container-main py-12 md:py-16">

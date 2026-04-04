@@ -10,37 +10,38 @@
 :root {
   --radius: 0.75rem;
 
-  --background: #f7f9fc;
-  --background-soft: #eef3f8;
+  /* Light mode with primary-tinted atmosphere */
+  --background: #eef4f9;
+  --background-soft: #e4edf5;
   --foreground: #0f1720;
 
   --text: #0f1720;
-  --text-muted: #5c6775;
+  --text-muted: #556170;
 
-  --card: rgba(255, 255, 255, 0.8);
-  --card-border: rgba(15, 23, 32, 0.08);
+  --card: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(111, 145, 173, 0.14);
 
   --primary: #8db7d6;
   --primary-dark: #6e95b2;
   --accent: #dceffc;
 
-  --section-banner: #e7f1f8;
-  --section-banner-2: #d8e8f4;
+  --section-banner: #dce9f3;
+  --section-banner-2: #cfdfec;
 
-  --popover: #ffffff;
+  --popover: #f5f9fc;
   --popover-foreground: #0f1720;
 
-  --secondary: rgba(15, 23, 32, 0.04);
+  --secondary: rgba(141, 183, 214, 0.1);
   --secondary-foreground: #0f1720;
 
-  --muted: rgba(15, 23, 32, 0.04);
-  --muted-foreground: #5c6775;
+  --muted: rgba(141, 183, 214, 0.08);
+  --muted-foreground: #556170;
 
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
 
-  --border: rgba(15, 23, 32, 0.08);
-  --input: rgba(15, 23, 32, 0.05);
+  --border: rgba(111, 145, 173, 0.14);
+  --input: rgba(141, 183, 214, 0.08);
   --ring: rgba(141, 183, 214, 0.35);
 }
 
@@ -187,9 +188,15 @@ button {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
   }
-.hero-subtitle {
-  color: rgba(15, 23, 32, 0.88);
-}
+
+  .hero-subtitle {
+    color: rgba(15, 23, 32, 0.88);
+  }
+
+  .dark .hero-subtitle {
+    color: rgba(245, 247, 250, 0.76);
+  }
+
   .premium-hover {
     transition:
       transform 0.45s ease,
@@ -220,13 +227,11 @@ button {
       background-color 0.35s ease,
       border-color 0.35s ease;
   }
-.dark .hero-subtitle {
-  color: rgba(245, 247, 250, 0.76);
-}
+
   .section-banner-bg {
     background:
-      radial-gradient(circle at 50% 0%, rgba(79, 195, 247, 0.14), transparent 32%),
-      radial-gradient(circle at 20% 100%, rgba(40, 120, 180, 0.1), transparent 28%),
+      radial-gradient(circle at 50% 0%, rgba(79, 195, 247, 0.18), transparent 32%),
+      radial-gradient(circle at 20% 100%, rgba(40, 120, 180, 0.12), transparent 28%),
       linear-gradient(180deg, var(--section-banner), var(--section-banner-2));
   }
 
@@ -293,7 +298,9 @@ button {
   .dark .shadow-glow {
     box-shadow: 0 0 35px rgba(156, 194, 221, 0.12);
   }
-    .testimonial-marquee-wrapper:hover .testimonial-marquee {
+
+  /* Testimonials */
+  .testimonial-marquee-wrapper:hover .testimonial-marquee {
     animation-play-state: paused;
   }
 
@@ -313,12 +320,133 @@ button {
       animation-duration: 24s;
     }
   }
+
+  /* Brands */
+  .brand-marquee-wrapper:hover .brand-marquee {
+    animation-play-state: paused;
+  }
+
+  .brand-marquee {
+    animation: brandScroll 22s linear infinite;
+    will-change: transform;
+  }
+
+  @media (max-width: 1024px) {
+    .brand-marquee {
+      animation-duration: 20s;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .brand-marquee {
+      animation-duration: 18s;
+    }
+  }
+
+  /* Shared background patterns - stronger in light mode */
+  .bg-pattern-grid {
+    background-image:
+      linear-gradient(rgba(84, 116, 145, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(84, 116, 145, 0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .bg-pattern-dots {
+    background-image: radial-gradient(
+      rgba(84, 116, 145, 0.18) 1.15px,
+      transparent 1.15px
+    );
+    background-size: 20px 20px;
+  }
+
+  .bg-pattern-radial {
+    background:
+      radial-gradient(circle at top center, rgba(141, 183, 214, 0.22), transparent 34%),
+      radial-gradient(circle at bottom left, rgba(141, 183, 214, 0.16), transparent 32%),
+      radial-gradient(circle at 80% 30%, rgba(111, 145, 173, 0.12), transparent 28%);
+  }
+
+  .bg-pattern-glow {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(141, 183, 214, 0.16), transparent 24%),
+      radial-gradient(circle at 80% 70%, rgba(141, 183, 214, 0.12), transparent 22%);
+    filter: blur(14px);
+  }
+
+  .bg-pattern-mesh {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(141, 183, 214, 0.18), transparent 22%),
+      radial-gradient(circle at 80% 30%, rgba(111, 145, 173, 0.16), transparent 20%),
+      radial-gradient(circle at 60% 80%, rgba(141, 183, 214, 0.12), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  }
+
+  .bg-pattern-wave {
+    background:
+      radial-gradient(120% 90% at 0% 100%, rgba(119, 165, 198, 0.34), transparent 50%),
+      radial-gradient(110% 80% at 30% 0%, rgba(111, 145, 173, 0.28), transparent 46%),
+      radial-gradient(90% 70% at 100% 100%, rgba(141, 183, 214, 0.22), transparent 42%),
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  }
+
+  .dark .bg-pattern-grid {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .dark .bg-pattern-dots {
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--foreground) 12%, transparent) 1.1px,
+      transparent 1.1px
+    );
+    background-size: 20px 20px;
+  }
+
+  .dark .bg-pattern-radial {
+    background:
+      radial-gradient(circle at top center, rgba(79, 195, 247, 0.18), transparent 35%),
+      radial-gradient(circle at bottom left, rgba(79, 195, 247, 0.12), transparent 35%);
+  }
+
+  .dark .bg-pattern-glow {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(156, 194, 221, 0.16), transparent 26%),
+      radial-gradient(circle at 80% 70%, rgba(156, 194, 221, 0.12), transparent 24%);
+  }
+
+  .dark .bg-pattern-mesh {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(79, 195, 247, 0.16), transparent 22%),
+      radial-gradient(circle at 80% 30%, rgba(159, 195, 223, 0.16), transparent 20%),
+      radial-gradient(circle at 60% 80%, rgba(79, 195, 247, 0.1), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008));
+  }
+
+  .dark .bg-pattern-wave {
+    background:
+      radial-gradient(120% 90% at 0% 100%, rgba(9, 60, 94, 0.7), transparent 50%),
+      radial-gradient(110% 80% at 30% 0%, rgba(8, 72, 110, 0.6), transparent 46%),
+      radial-gradient(90% 70% at 100% 100%, rgba(10, 88, 132, 0.35), transparent 42%),
+      linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.008));
+  }
 }
+
 @keyframes testimonial-scroll {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(calc(-50% - 14px));
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+@keyframes brandScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 40px));
   }
 }

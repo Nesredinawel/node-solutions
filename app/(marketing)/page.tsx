@@ -10,7 +10,7 @@ import { ContactCta, ContactForm } from "@/features/contact";
 
 export default function HomePage() {
   return (
-    <main className="bg-background">
+    <main className="">
       <HeroSection />
       <BrandLogos />
       <HomeServicesPreview />

@@ -25,11 +25,11 @@ export function TestimonialsCarousel({
   return (
     <div className="relative overflow-hidden">
       <div className="testimonial-marquee-wrapper">
-        <div className="testimonial-marquee flex w-max gap-5 py-6 sm:gap-6 md:gap-7">
+        <div className="testimonial-marquee flex w-max gap-3 py-4 sm:gap-4 sm:py-5 md:gap-5 lg:gap-6">
           {repeatedTestimonials.map((item, index) => (
             <div
               key={`${item.name}-${index}`}
-              className="w-[300px] shrink-0 sm:w-[340px] md:w-[390px] lg:w-[430px] xl:w-[470px]"
+              className="w-[220px] shrink-0 sm:w-[250px] md:w-[290px] lg:w-[340px] xl:w-[380px]"
             >
               <TestimonialCard
                 quote={item.quote}
@@ -42,8 +42,8 @@ export function TestimonialsCarousel({
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background via-background/88 to-transparent sm:w-20 md:w-24" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background via-background/88 to-transparent sm:w-20 md:w-24" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-background via-background/92 to-transparent sm:w-14 md:w-20 lg:w-24" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-background via-background/92 to-transparent sm:w-14 md:w-20 lg:w-24" />
     </div>
   );
 }

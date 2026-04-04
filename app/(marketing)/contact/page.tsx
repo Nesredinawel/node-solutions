@@ -7,7 +7,7 @@ import {
 
 export default function ContactPage() {
   return (
-    <main className="bg-background">
+    <main className="">
       <ContactPageHero />
       <ContactInfoCards />
       <ContactCta />

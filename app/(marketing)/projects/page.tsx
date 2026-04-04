@@ -22,7 +22,7 @@ export default function ProjectsPage() {
   }, [activeCategory]);
 
   return (
-    <main className="bg-background">
+    <main className="">
       <ProjectsPageHero />
 
       <div className="container-main pt-8">

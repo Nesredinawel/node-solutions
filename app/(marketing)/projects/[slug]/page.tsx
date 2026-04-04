@@ -29,7 +29,7 @@ export default async function ProjectDetailPage({
     .slice(0, 2);
 
   return (
-    <main className="bg-background">
+    <main className="">
       <ProjectDetailHero title={project.subtitle} />
       <ProjectDetailMain project={project} />
       <RelatedProjects projects={relatedProjects} />
