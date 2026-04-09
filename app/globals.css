@@ -376,7 +376,82 @@ button {
       animation-duration: 24s;
     }
   }
+  .reveal-base {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, 22px), 0) scale(var(--reveal-scale, 0.985));
+    filter: blur(var(--reveal-blur, 8px)) saturate(1.06);
+    transition:
+      opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 720ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 720ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: transform, opacity, filter;
+  }
 
+  .reveal-show {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0px) saturate(1);
+  }
+
+  /* Optional glow */
+  .reveal-has-glow {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .reveal-glow {
+    position: absolute;
+    inset: -80px;
+    z-index: 0;
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+    background:
+      radial-gradient(circle at 30% 40%, rgba(141, 183, 214, 0.16), transparent 46%),
+      radial-gradient(circle at 70% 60%, rgba(141, 183, 214, 0.12), transparent 44%);
+    filter: blur(18px);
+    pointer-events: none;
+  }
+
+  .dark .reveal-glow {
+    background:
+      radial-gradient(circle at 30% 40%, rgba(156, 194, 221, 0.18), transparent 46%),
+      radial-gradient(circle at 70% 60%, rgba(156, 194, 221, 0.12), transparent 44%);
+  }
+
+  .reveal-show .reveal-glow {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Staggered children (if enabled) */
+  .reveal-child {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--child-delay, 0ms);
+    will-change: transform, opacity;
+  }
+
+  .reveal-child-show {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-base,
+    .reveal-child {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      transition: none !important;
+    }
+  }
   /* Brands */
   .brand-marquee-wrapper:hover .brand-marquee {
     animation-play-state: paused;
