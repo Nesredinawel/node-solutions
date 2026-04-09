@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import {
@@ -11,7 +11,7 @@ import {
 import { servicesPageData } from "@/features/services/data/services-page.data";
 import { ScrollToSectionButton } from "@/shared/components/common/scroll-to-section-button";
 
-export default function ServicesPage() {
+function ServicesPageContent() {
   const searchParams = useSearchParams();
   const requestedSlug = searchParams.get("service");
   const defaultSlug = servicesPageData[0]?.slug ?? "";
@@ -61,7 +61,15 @@ export default function ServicesPage() {
       </div>
 
       <ServicesPageCta />
-       <ScrollToSectionButton targetId="services-top" />
+      <ScrollToSectionButton targetId="services-top" />
     </main>
   );
 }
+
+export default function ServicesPage() {
+  return (
+    <Suspense>
+      <ServicesPageContent />
+    </Suspense>
+  );
+}

@@ -33,7 +33,7 @@ export function ServiceCard({
           </div>
 
           <h3 className="text-xl font-semibold text-white">{title}</h3>
-          <p className="mt-4 text-sm leading-7 text-[var(--text-muted)]">
+          <p className="mt-4 text-sm leading-7 text-white/70">
             {description}
           </p>
         </div>
@@ -41,7 +41,7 @@ export function ServiceCard({
         <div className="mt-8">
           <Link
             href={href}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-sm transition hover:bg-white/15"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm !text-white backdrop-blur-sm transition hover:bg-white/15"
           >
             Learn More <ArrowRight size={16} />
           </Link>

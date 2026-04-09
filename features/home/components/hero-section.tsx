@@ -26,7 +26,7 @@ export function HeroSection() {
 
       <div className="container-main relative flex min-h-[88vh] flex-col items-center justify-center text-center">
         <div className="max-w-4xl">
-          <p className="mb-4 inline-flex rounded-full border border-border bg-card px-4 py-1 text-xs uppercase tracking-[0.2em] text-primary backdrop-blur-sm">
+          <p className="mb-4 inline-flex rounded-full border border-border bg-card px-4 py-1 text-xs uppercase tracking-[0.2em] text-black dark:text-primary backdrop-blur-sm">
             Creative • Technical • Strategic
           </p>
 
