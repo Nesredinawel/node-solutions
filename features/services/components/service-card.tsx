@@ -28,7 +28,7 @@ export function ServiceCard({
 
       <div className="relative flex min-h-[360px] flex-col justify-between p-6 md:p-8">
         <div>
-          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-primary backdrop-blur-sm">
+          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm">
             <Icon size={20} />
           </div>
 

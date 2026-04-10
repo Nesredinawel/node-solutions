@@ -30,7 +30,7 @@ export default function ProjectsPage() {
 
       <div className="container-main pt-8">
         <ProjectFilters
-          categories={projectCategories}
+          categories={[...projectCategories]}
           activeCategory={activeCategory}
           onChange={setActiveCategory}
         />

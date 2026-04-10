@@ -195,6 +195,10 @@ button {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
   }
+  
+  .section-space {
+    @apply py-2 md:py-4 lg:py-8;
+  }
 
   .shadow-card {
     box-shadow: 0 10px 30px rgba(15, 23, 32, 0.08);

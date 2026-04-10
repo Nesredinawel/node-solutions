@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Play } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+import type { ProjectMediaItem } from "@/features/projects/data/projects.data";
 
 type ProjectDetailMainProps = {
   project: {
@@ -16,18 +17,29 @@ type ProjectDetailMainProps = {
     category: string;
     image: string;
     images?: string[];
+    media?: ProjectMediaItem[];
   };
 };
 
 export function ProjectDetailMain({ project }: ProjectDetailMainProps) {
-  const images = useMemo(() => {
-    const list = project.images?.length ? project.images : [project.image];
-    // remove duplicates just in case
-    return Array.from(new Set(list));
-  }, [project.images, project.image]);
+  const media = useMemo<ProjectMediaItem[]>(() => {
+    // 1) Prefer `media`
+    if (project.media?.length) return project.media;
+
+    // 2) Fallback: `images`
+    if (project.images?.length) {
+      return Array.from(new Set(project.images)).map((src) => ({
+        type: "image" as const,
+        src,
+      }));
+    }
+
+    // 3) Fallback: single `image`
+    return [{ type: "image" as const, src: project.image }];
+  }, [project.media, project.images, project.image]);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeImage = images[Math.min(activeIndex, images.length - 1)];
+  const active = media[Math.min(activeIndex, media.length - 1)];
 
   return (
     <section className="container-main py-10 md:py-12">
@@ -35,30 +47,48 @@ export function ProjectDetailMain({ project }: ProjectDetailMainProps) {
         <div className="p-4 md:p-6">
           <div className="overflow-hidden rounded-xl border border-border">
             <div className="relative h-[320px] overflow-hidden md:h-[520px]">
-              {/* Main image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
-                style={{ backgroundImage: `url('${activeImage}')` }}
-              />
+              {/* Main media */}
+              {active.type === "video" ? (
+                <video
+                  key={active.src}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src={active.src}
+                  poster={active.poster}
+                  controls
+                  autoPlay
+                  muted
+                  playsInline
+                />
+              ) : (
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
+                  style={{ backgroundImage: `url('${active.src}')` }}
+                />
+              )}
 
               {/* Overlays (keep your style) */}
               <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/30" />
               <div className="absolute inset-0 grid-pattern opacity-10" />
 
               {/* Thumbnail selector (top-left) */}
-              {images.length > 1 ? (
+              {media.length > 1 ? (
                 <div className="absolute left-4 top-4 z-10">
                   <div className="glass-card rounded-2xl border border-border p-2 shadow-card backdrop-blur-md">
                     <div className="flex flex-col gap-2">
-                      {images.slice(0, 5).map((img, idx) => {
+                      {media.slice(0, 6).map((item, idx) => {
                         const isActive = idx === activeIndex;
+
+                        const thumbSrc =
+                          item.type === "video"
+                            ? item.thumb || item.poster || ""
+                            : item.thumb || item.src;
 
                         return (
                           <button
-                            key={img}
+                            key={`${item.type}-${"src" in item ? item.src : idx}`}
                             type="button"
                             onClick={() => setActiveIndex(idx)}
-                            aria-label={`Select image ${idx + 1}`}
+                            aria-label={`Select media ${idx + 1}`}
                             className={cn(
                               "relative h-12 w-12 overflow-hidden rounded-xl border transition",
                               isActive
@@ -66,11 +96,21 @@ export function ProjectDetailMain({ project }: ProjectDetailMainProps) {
                                 : "border-border hover:border-primary/40"
                             )}
                           >
+                            {/* Thumb */}
                             <div
                               className="absolute inset-0 bg-cover bg-center"
-                              style={{ backgroundImage: `url('${img}')` }}
+                              style={{ backgroundImage: `url('${thumbSrc}')` }}
                             />
-                            <div className="absolute inset-0 bg-black/20" />
+                            <div className="absolute inset-0 bg-black/25" />
+
+                            {/* Video icon overlay */}
+                            {item.type === "video" ? (
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white">
+                                  <Play size={14} />
+                                </span>
+                              </div>
+                            ) : null}
 
                             {isActive ? (
                               <div className="absolute inset-0 ring-2 ring-primary/40" />
