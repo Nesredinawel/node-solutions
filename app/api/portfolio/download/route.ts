@@ -125,9 +125,9 @@ export async function GET(req: Request) {
     sectionY -= 170;
   }
 
-  const bytes = await pdf.save();
+const bytes = await pdf.save();
 
-  return new NextResponse(bytes, {
+return new NextResponse(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer, {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="NodeSolution-Portfolio.pdf"`,
