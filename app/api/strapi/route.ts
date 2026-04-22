@@ -42,6 +42,9 @@ async function fetcher<T>(
   return json.data ? json.data : json
 }
 
+// Deep populate query for services with nested category and items
+const servicePopulate = "populate[category][populate][items][populate]=*";
+
 // --- API Functions ---
 
 export const getAbout = () => fetcher<About>('/about', { tags: ['about'] })
@@ -61,7 +64,8 @@ export const getStory = (id: string) => fetcher<Story>(`/our-stories/${id}`, { t
 export const getProjects = () => fetcher<Project[]>('/projects', { tags: ['projects'] })
 export const getProject = (id: string) => fetcher<Project>(`/projects/${id}`, { tags: [`project-${id}`] })
 
-export const getServices = () => fetcher<Service[]>('/services', { tags: ['services'] })
+export const getServices = () => fetcher<Service[]>(`/services?${servicePopulate}`, { tags: ['services'] })
+export const getServicesPage = () => fetcher<any[]>('/services?populate=*', { tags: ['services'] })
 export const getService = (id: string) => fetcher<Service>(`/services/${id}`, { tags: [`service-${id}`] })
 
 export const getTestimonials = () => fetcher<Testimonial[]>('/testimonials', { tags: ['testimonials'] })
