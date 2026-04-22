@@ -1,7 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { AnimatedLogo } from "@/shared/components/common/animated-logo";
-;
+import { getAbout } from "@/app/api/strapi/route";
 
 export function AboutIntroSection() {
+  const [aboutText, setAboutText] = useState('');
+
+  useEffect(() => {
+    getAbout()
+      .then((about) => {
+        setAboutText(about?.content);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch about data:", error);
+      });
+  }, []);
+
   return (
     <section className="container-main py-14 md:py-20">
       <div className="grid items-center gap-10 border-b border-border pb-14 md:pb-20 lg:grid-cols-2">
@@ -11,19 +26,9 @@ export function AboutIntroSection() {
           </h2>
 
           <p className="mt-6 text-sm leading-8 text-muted-foreground md:text-base">
-            nod solution is a modern digital solutions company passionate about
-            helping businesses grow through thoughtful design, reliable technical
-            delivery, and strategic execution. We work across digital marketing,
-            creative branding, IT infrastructure, and business-focused digital
-            products.
+            {aboutText}
           </p>
 
-          <p className="mt-5 text-sm leading-8 text-muted-foreground md:text-base">
-            Our process is structured yet collaborative, combining business
-            understanding, creative thinking, and engineering discipline to
-            build solutions that are practical, visually polished, and aligned
-            with real-world goals.
-          </p>
         </div>
 
         <div className="relative mx-auto w-full max-w-[420px]">
