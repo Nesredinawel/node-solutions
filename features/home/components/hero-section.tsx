@@ -3,9 +3,35 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { heroImages, heroTags } from "../data/home.data";
+import { getHero } from "@/app/api/strapi/route";
 
 export function HeroSection() {
   const [active, setActive] = useState(0);
+  const [heroData, setHeroData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHero = async () => {
+      try {
+        const result = await getHero();
+        setHeroData(result);
+      } catch (error) {
+        console.error("Failed to load hero:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHero();
+
+    const id = window.setInterval(() => {
+      setActive((i) => (i + 1) % heroImages.length);
+    }, 4500);
+
+    return () => window.clearInterval(id);
+  }, []);
+
+  console.log(heroData)
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -15,6 +41,8 @@ export function HeroSection() {
     return () => window.clearInterval(id);
   }, []);
 
+  if (loading) return <div className="min-h-[88vh] w-full bg-background" />;
+  if (!heroData) return null;
   return (
     <section
       id="home-top"
@@ -48,22 +76,20 @@ export function HeroSection() {
           </p>
 
           <h1 className="text-4xl font-bold leading-tight text-foreground md:text-6xl">
-            Building Brands, Spaces, and
-            <br className="hidden md:block" /> Digital Experiences
+           {heroData.header}
           </h1>
 
           <p className="hero-subtitle mx-auto mt-5 max-w-2xl text-sm leading-7 md:text-lg">
-            nod solution helps businesses grow through design, digital strategy,
-            printing excellence, and reliable IT infrastructure.
+            {heroData.subheader}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            {heroTags.map((tag) => (
+            {heroData.badge?.map((item, index) => (
               <span
-                key={tag}
+                key={index} 
                 className="hero-chip rounded-full px-4 py-2 text-sm font-medium text-foreground shadow-card transition hover:scale-[1.02]"
               >
-                {tag}
+                {item.value}
               </span>
             ))}
           </div>
