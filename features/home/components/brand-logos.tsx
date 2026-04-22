@@ -1,11 +1,34 @@
 "use client";
 
-import { useMemo } from "react";
-
-const brands = ["zapier", "spotify", "zoom", "slack", "amazon", "adobe"];
+import { getBrand } from "@/app/api/strapi/route";
+import { useMemo, useState, useEffect } from "react";
 
 export function BrandLogos() {
-  const repeatedBrands = useMemo(() => [...brands, ...brands], []);
+  const [brandData, setBrandData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBrand = async () => {
+      try {
+        const result = await getBrand();
+        setBrandData(result);
+      } catch (error) {
+        console.error("Failed to load brand:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrand();
+  }, []);
+
+  const repeatedBrands = useMemo(() => {
+    if (!brandData?.brand) return [];
+    return [...brandData.brand, ...brandData.brand];
+  }, [brandData]);
+
+  if (loading) return <div className="h-24 w-full bg-[var(--background-soft)] animate-pulse" />;
+  if (!brandData?.brand) return null;
 
   return (
     <section className="relative overflow-hidden border-b border-border bg-[var(--background-soft)]">
@@ -13,12 +36,12 @@ export function BrandLogos() {
         <div className="relative overflow-hidden">
           <div className="brand-marquee-wrapper">
             <div className="brand-marquee flex w-max items-center gap-10 sm:gap-12 md:gap-16 lg:gap-20">
-              {repeatedBrands.map((brand, index) => (
+              {repeatedBrands.map((item, index) => (
                 <div
-                  key={`${brand}-${index}`}
+                  key={`${item.id}-${index}`}
                   className="shrink-0 text-center text-xs font-medium uppercase tracking-[0.24em] text-foreground/70 transition duration-300 hover:text-foreground sm:text-sm"
                 >
-                  {brand}
+                  {item.name}
                 </div>
               ))}
             </div>

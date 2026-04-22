@@ -46,7 +46,7 @@ async function fetcher<T>(
 
 export const getAbout = () => fetcher<About>('/about', { tags: ['about'] })
 
-export const getBrand = () => fetcher<Brand>('/brand', { tags: ['brand'] })
+export const getBrand = () => fetcher<Brand>('/brand?populate=*', { tags: ['brand'] })
 
 export const getFAQs = () => fetcher<FAQ[]>('/faqs', { tags: ['faqs'] })
 export const getFAQ = (id: string) => fetcher<FAQ>(`/faqs/${id}`, { tags: [`faq-${id}`] })
