@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -5,15 +8,23 @@ type ServiceCardProps = {
   title: string;
   description: string;
   href: string;
-  icon: React.ElementType;
+  icon: React.ReactNode;
 };
 
 export function ServiceCard({
   title,
   description,
   href,
-  icon: Icon,
+  icon,
 }: ServiceCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const maxLength = 110;
+  const isLong = description && description.length > maxLength;
+  const displayDescription = isLong && !isExpanded
+    ? description.slice(0, maxLength).trim() + "..."
+    : description;
+
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-border shadow-card">
       <div
@@ -29,12 +40,23 @@ export function ServiceCard({
       <div className="relative flex min-h-[360px] flex-col justify-between p-6 md:p-8">
         <div>
           <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm">
-            <Icon size={20} />
+            {icon}
           </div>
 
           <h3 className="text-xl font-semibold text-white">{title}</h3>
           <p className="mt-4 text-sm leading-7 text-white/70">
-            {description}
+            {displayDescription}
+            {isLong && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsExpanded(!isExpanded);
+                }}
+                className="ml-1 text-white underline hover:text-white/80 transition-colors"
+              >
+                {isExpanded ? "show less" : "read more"}
+              </button>
+            )}
           </p>
         </div>
 

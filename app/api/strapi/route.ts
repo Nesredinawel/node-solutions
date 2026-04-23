@@ -13,10 +13,6 @@ import type {
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.example.com'
 
-/**
- * Standardized Fetcher
- * Automatically unwraps Strapi-style { data: ... } wrappers
- */
 async function fetcher<T>(
   endpoint: string,
   options?: RequestInit & { tags?: string[] }
@@ -25,9 +21,9 @@ async function fetcher<T>(
 
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     headers: { 'Content-Type': 'application/json' },
-    next: { 
-      revalidate: 60, // ISR: Cache for 60 seconds
-      tags: tags || [] 
+    next: {
+      revalidate: 60,
+      tags: tags || []
     },
     ...fetchOptions,
   })
@@ -38,14 +34,10 @@ async function fetcher<T>(
 
   const json = await res.json()
 
-  // This handles the Strapi/CMS "data" wrapper automatically
   return json.data ? json.data : json
 }
 
-// Deep populate query for services with nested category and items
 const servicePopulate = "populate[category][populate][items][populate]=*";
-
-// --- API Functions ---
 
 export const getAbout = () => fetcher<About>('/about', { tags: ['about'] })
 
