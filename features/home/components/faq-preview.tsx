@@ -1,13 +1,30 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { SectionHeading } from "@/shared/components/ui/section-heading";
-import { faqs } from "@/features/faq/data/faq.data";
+import { faqs as initialFaqs } from "@/features/faq/data/faq.data";
 import { FaqCard } from "../../faq/components/faq-card";
+import { getFAQs } from "@/app/api/strapi/api";
 
 export function FaqPreview() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [faqs, setFaqs] = useState<any[]>(initialFaqs);
   const baseId = useId();
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const data = await getFAQs();
+        if (data && data.length > 0) {
+          setFaqs(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch FAQs:", error);
+      }
+    };
+
+    fetchFaqs();
+  }, []);
 
   // Split into two fixed columns so grid row heights don't stretch neighbors
   const { left, right, mid } = useMemo(() => {
@@ -17,7 +34,7 @@ export function FaqPreview() {
       left: faqs.slice(0, mid),
       right: faqs.slice(mid),
     };
-  }, []);
+  }, [faqs]);
 
   return (
     <section className="section-space pt-0">

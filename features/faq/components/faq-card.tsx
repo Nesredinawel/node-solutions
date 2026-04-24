@@ -13,6 +13,8 @@ type FaqCardProps = {
   buttonId: string;
 };
 
+
+
 export function FaqCard({
   question,
   answer,
@@ -22,6 +24,7 @@ export function FaqCard({
   panelId,
   buttonId,
 }: FaqCardProps) {
+
   return (
     <div
       className={cn(

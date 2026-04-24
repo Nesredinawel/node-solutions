@@ -12,9 +12,17 @@ import { submitContact } from "../actions/submit-contact";
 import { useToast } from "@/shared/components/common/toast-provider";
 import { LoadingOverlay } from "@/shared/components/common/loading-overlay";
 import { fireSuccessConfetti } from "@/shared/lib/confetti";
+import { getServices } from "@/app/api/strapi/api";
 
 type ContactFormProps = {
   prefillServiceSlug?: string;
+};
+
+type ServiceOption = {
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
 };
 
 export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
@@ -24,6 +32,36 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
     type: "success" | "error";
     message: string;
   } | null>(null);
+
+  const [servicesOptions, setServicesOptions] = useState<ServiceOption[]>(contactServices as unknown as ServiceOption[]);
+
+  useEffect(() => {
+    const fetchDynamicServices = async () => {
+      try {
+        const data = await getServices();
+        console.log("services data:", data);
+        if (data && data.length > 0) {
+          const mapped = data.map((item: any, i: number) => {
+            const rawDescription = item.subHeader || item.description || "";
+            const truncatedDesc = rawDescription.length > 65 
+              ? rawDescription.substring(0, 65).trim() + "..." 
+              : rawDescription;
+
+            return {
+              slug: item.slug || `service-${i}`,
+              title: item.header || item.title || "Service",
+              description: truncatedDesc,
+              image: contactServices[i % contactServices.length]?.image || "",
+            };
+          });
+          setServicesOptions(mapped);
+        }
+      } catch (err) {
+        console.error("Failed to fetch services:", err);
+      }
+    };
+    fetchDynamicServices();
+  }, []);
 
   const { showToast } = useToast();
 
@@ -62,7 +100,7 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
       return;
     }
 
-    const exists = contactServices.some((s) => s.slug === prefillServiceSlug);
+    const exists = servicesOptions.some((s) => s.slug === prefillServiceSlug);
 
     if (exists) {
       setValue("services", [prefillServiceSlug], {
@@ -72,7 +110,7 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
     }
 
     hasPrefilledRef.current = true;
-  }, [prefillServiceSlug, selectedServices, setValue]);
+  }, [prefillServiceSlug, selectedServices, setValue, servicesOptions]);
 
   const handleToggleService = (slug: string) => {
     const current = selectedServices || [];
@@ -91,7 +129,7 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
   const handleSelectAll = () => {
     setValue(
       "services",
-      contactServices.map((service) => service.slug),
+      servicesOptions.map((service) => service.slug),
       { shouldValidate: true }
     );
   };
@@ -177,11 +215,10 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
 
             {banner ? (
               <div
-                className={`mb-8 rounded-2xl border px-4 py-3 text-sm ${
-                  banner.type === "success"
-                    ? "border-green-500/20 bg-green-500/10 text-green-700 dark:text-green-400"
-                    : "border-red-500/20 bg-red-500/10 text-red-700 dark:text-red-400"
-                }`}
+                className={`mb-8 rounded-2xl border px-4 py-3 text-sm ${banner.type === "success"
+                  ? "border-green-500/20 bg-green-500/10 text-green-700 dark:text-green-400"
+                  : "border-red-500/20 bg-red-500/10 text-red-700 dark:text-red-400"
+                  }`}
               >
                 {banner.message}
               </div>
@@ -242,7 +279,7 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
               </div>
 
               <ServiceInterestSelector
-                options={contactServices}
+                options={servicesOptions}
                 selected={selectedServices || []}
                 onToggle={handleToggleService}
                 onSelectAll={handleSelectAll}
