@@ -21,8 +21,14 @@ export interface FAQ {
 
 export interface Footer {
   id: string
-  links: { label: string; href: string }[]
-  copyright: string
+  email: string
+  phone: string
+  address: string
+  facebook: string
+  linkedin: string
+  twitter: string
+  links?: { label: string; href: string }[]
+  copyright?: string
 }
 
 export interface Hero {

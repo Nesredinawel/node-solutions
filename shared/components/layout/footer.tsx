@@ -1,9 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Logo } from "@/shared/components/common/logo";
 import { NAV_LINKS } from "@/shared/constants/nav-links";
 import { Facebook, Twitter, Linkedin } from "lucide-react";
+import { getFooter } from "@/app/api/strapi/api";
 
 export function Footer() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    getFooter().then((res) => {
+      console.log("footer data:", res);
+      setData(res);
+    });
+  }, []);
+
   return (
     <footer className="border-t border-border bg-[var(--background-soft)]">
       <div className="container-main py-10">
@@ -19,13 +32,28 @@ export function Footer() {
           </nav>
 
           <div className="flex items-center gap-4 text-muted-foreground">
-            <Link href="#" className="hover:text-foreground">
+            <Link 
+              href={data?.facebook || "#"} 
+              className="hover:text-foreground"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Facebook size={18} />
             </Link>
-            <Link href="#" className="hover:text-foreground">
+            <Link 
+              href={data?.twitter || "#"} 
+              className="hover:text-foreground"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Twitter size={18} />
             </Link>
-            <Link href="#" className="hover:text-foreground">
+            <Link 
+              href={data?.linkedin || "#"} 
+              className="hover:text-foreground"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Linkedin size={18} />
             </Link>
           </div>
@@ -33,11 +61,11 @@ export function Footer() {
 
         <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-1 md:flex-row md:gap-6">
-            <span>hello@nodesolution.com</span>
-            <span>+1 555 123 2323</span>
-            <span>New York, USA</span>
+            <span>{data?.email || "hello@nodesolution.com"}</span>
+            <span>{data?.phone || "+1 555 123 2323"}</span>
+            <span>{data?.address || "New York, USA"}</span>
           </div>
-          <p>© 2025 nod solution. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} nod solution. All rights reserved.</p>
         </div>
       </div>
     </footer>

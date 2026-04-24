@@ -46,7 +46,7 @@ export const getBrand = () => fetcher<Brand>('/brand?populate=*', { tags: ['bran
 export const getFAQs = () => fetcher<FAQ[]>('/faqs', { tags: ['faqs'] })
 export const getFAQ = (id: string) => fetcher<FAQ>(`/faqs/${id}`, { tags: [`faq-${id}`] })
 
-export const getFooter = () => fetcher<Footer>('/footer', { tags: ['footer'] })
+export const getFooter = () => fetcher<Footer>('/footer?populate=*', { tags: ['footer'] })
 
 export const getHero = () => fetcher<Hero>('/hero?populate=*', { tags: ['hero'] })
 
