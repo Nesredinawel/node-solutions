@@ -1,5 +1,5 @@
 import { SectionHeading } from "@/shared/components/ui/section-heading";
-import { getServices } from "@/app/api/strapi/route";
+import { getServices } from "@/app/api/strapi/api";
 import { ServiceCard } from "@/features/services/components/service-card";
 import {
   BarChart3,

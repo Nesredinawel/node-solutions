@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { heroImages, heroTags } from "../data/home.data";
-import { getHero } from "@/app/api/strapi/route";
+import { getHero } from "@/app/api/strapi/api";
 
 export function HeroSection() {
   const [active, setActive] = useState(0);

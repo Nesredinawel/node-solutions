@@ -1,6 +1,6 @@
 "use client";
 
-import { getBrand } from "@/app/api/strapi/route";
+import { getBrand } from "@/app/api/strapi/api";
 import { useMemo, useState, useEffect } from "react";
 
 export function BrandLogos() {

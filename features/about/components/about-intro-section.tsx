@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatedLogo } from "@/shared/components/common/animated-logo";
-import { getAbout } from "@/app/api/strapi/route";
+import { getAbout } from "@/app/api/strapi/api";
 
 export function AboutIntroSection() {
   const [aboutText, setAboutText] = useState('');

@@ -33,7 +33,7 @@ import {
   ServiceShowcaseSection,
   ServicesPageCta,
 } from "@/features/services";
-import { getServices } from "@/app/api/strapi/route";
+import { getServices } from "@/app/api/strapi/api";
 import { servicesPageData } from "@/features/services/data/services-page.data";
 import { ScrollToSectionButton } from "@/shared/components/common/scroll-to-section-button";
 
