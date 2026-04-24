@@ -1,13 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TestimonialCard } from "./testimonial-card";
+import { getTestimonials } from "@/app/api/strapi/api";
 
 type Testimonial = {
-  quote: string;
+  quote?: string;
+  description?: string;
   name: string;
-  role: string;
-  avatar: string;
+  role?: string;
+  position?: string;
+  avatar?: string;
 };
 
 type TestimonialsCarouselProps = {
@@ -15,8 +18,29 @@ type TestimonialsCarouselProps = {
 };
 
 export function TestimonialsCarousel({
-  testimonials,
+  testimonials: initialTestimonials,
 }: TestimonialsCarouselProps) {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const data = await getTestimonials();
+        if (data && data.length > 0) {
+          const mergedData = data.map((d: any, index: number) => ({
+            ...d,
+            avatar: d.avatar || initialTestimonials[index % initialTestimonials.length]?.avatar,
+          }));
+          setTestimonials(mergedData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch testimonials:", error);
+      }
+    };
+
+    fetchTestimonials();
+  }, [initialTestimonials]);
+
   const repeatedTestimonials = useMemo(
     () => [...testimonials, ...testimonials],
     [testimonials]
@@ -32,10 +56,10 @@ export function TestimonialsCarousel({
               className="w-[220px] shrink-0 sm:w-[250px] md:w-[290px] lg:w-[340px] xl:w-[380px]"
             >
               <TestimonialCard
-                quote={item.quote}
+                quote={item.description || item.quote || ""}
                 name={item.name}
-                role={item.role}
-                avatar={item.avatar}
+                role={item.position || item.role || ""}
+                avatar={item.avatar || ""}
               />
             </div>
           ))}
