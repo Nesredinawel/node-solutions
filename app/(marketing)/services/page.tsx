@@ -129,7 +129,6 @@ function ServicesPageContent() {
     const loadServices = async () => {
       try {
         const apiServices = await getServices();
-        console.log("services API data", apiServices);
         if (Array.isArray(apiServices) && apiServices.length > 0) {
           setServices(apiServices.map(mapApiService));
         }

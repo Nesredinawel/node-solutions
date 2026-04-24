@@ -10,7 +10,6 @@ export function StorySection() {
 
   useEffect(() => {
     getStories().then((res) => {
-      console.log("stories data:", res);
       if (Array.isArray(res) && res.length > 0) {
         setStories(res);
       }

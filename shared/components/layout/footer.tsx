@@ -12,7 +12,6 @@ export function Footer() {
 
   useEffect(() => {
     getFooter().then((res) => {
-      console.log("footer data:", res);
       setData(res);
     });
   }, []);

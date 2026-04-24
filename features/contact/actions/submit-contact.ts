@@ -28,7 +28,8 @@ export async function submitContact(
     // TODO: send email / save to DB
     await new Promise((resolve) => setTimeout(resolve, 900));
 
-    console.log("Contact submission:", parsed.data);
+    // No-op for logging in production
+    // console.log("Contact submission:", parsed.data);
 
     return {
       success: true,

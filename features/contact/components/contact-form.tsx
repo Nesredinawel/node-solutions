@@ -39,7 +39,6 @@ export function ContactForm({ prefillServiceSlug }: ContactFormProps) {
     const fetchDynamicServices = async () => {
       try {
         const data = await getServices();
-        console.log("services data:", data);
         if (data && data.length > 0) {
           const mapped = data.map((item: any, i: number) => {
             const rawDescription = item.subHeader || item.description || "";

@@ -31,7 +31,7 @@ export function HeroSection() {
     return () => window.clearInterval(id);
   }, []);
 
-  console.log(heroData)
+
 
   useEffect(() => {
     const id = window.setInterval(() => {
