@@ -15,7 +15,7 @@ export function StoryCard({
         <span className="text-6xl font-semibold leading-none text-primary/90 md:text-7xl">
           {number}
         </span>
-        <h3 className="pb-1 text-2xl font-medium text-primary">{title}</h3>
+        <h3 className="pb-1 text-3xl font-medium text-primary">{title}</h3>
       </div>
 
       <p className="mt-6 text-sm leading-8 text-muted-foreground md:text-base">

@@ -10,18 +10,18 @@ export type ProjectCategory = (typeof projectCategories)[number];
 
 export type ProjectMediaItem =
   | {
-      type: "image";
-      src: string;
-      thumb?: string;
-      alt?: string;
-    }
+    type: "image";
+    src: string;
+    thumb?: string;
+    alt?: string;
+  }
   | {
-      type: "video";
-      src: string;
-      poster?: string; // thumbnail image for video
-      thumb?: string;  // optional small thumb (if different)
-      title?: string;
-    };
+    type: "video";
+    src: string;
+    poster?: string; // thumbnail image for video
+    thumb?: string;  // optional small thumb (if different)
+    title?: string;
+  };
 
 export type Project = {
   slug: string;

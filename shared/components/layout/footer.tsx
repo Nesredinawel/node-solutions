@@ -32,24 +32,24 @@ export function Footer() {
           </nav>
 
           <div className="flex items-center gap-4 text-muted-foreground">
-            <Link 
-              href={data?.facebook || "#"} 
+            <Link
+              href={data?.facebook || "#"}
               className="hover:text-foreground"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Facebook size={18} />
             </Link>
-            <Link 
-              href={data?.twitter || "#"} 
+            <Link
+              href={data?.twitter || "#"}
               className="hover:text-foreground"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Twitter size={18} />
             </Link>
-            <Link 
-              href={data?.linkedin || "#"} 
+            <Link
+              href={data?.linkedin || "#"}
               className="hover:text-foreground"
               target="_blank"
               rel="noopener noreferrer"
